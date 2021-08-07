@@ -143,13 +143,30 @@ class command
 
 		void get_command_from_string(const string& str , string& s_command , string& name)
 		{
-			if (str.empty())
+			if (str.empty() || str.find(" ") == str.npos)
 			{
 				return;
 			}
 
+
+			//name check
+			string temp = str.substr(str.find(" ") + 1 , str.length());
+			auto iter = temp.begin();
+
+			//erase space
+			for (; iter != temp.end();)
+			{
+				if (*iter == ' ')
+					iter = temp.erase(iter);
+				else
+					++iter;
+			}
+
+			if (temp.empty())
+				return;
+
 			s_command = str.substr(0 , str.find(" "));
-			name = str.substr(str.find(" ") + 1 , str.length());
+			name = temp;
 		}
 
 		//lv1
